@@ -63,10 +63,12 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         refreshWeather = (Button) findViewById(R.id.refresh_weather);
         String countyCode = getIntent().getStringExtra("county_code");
 
+        //Log.d("WeatherActivity", countyCode);
+
         if(!TextUtils.isEmpty(countyCode)){
             publishText.setText("Sychronizing...");
-            weatherInfoLayout.setVisibility(View.INVISIBLE);
-            cityNameText.setVisibility(View.INVISIBLE);
+            //weatherInfoLayout.setVisibility(View.INVISIBLE);
+            //cityNameText.setVisibility(View.INVISIBLE);
             queryWeatherCode(countyCode);
         }else{
             showWeather();
@@ -122,6 +124,9 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
                         String[] array = response.split("\\|");
                         if (array != null && array.length == 2) {
                             String weatherCode = array[1];
+
+                            //Log.d("WeatherActivity", weatherCode);
+
                             queryWeatherInfo(weatherCode);
                         }
                     }
@@ -154,9 +159,15 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         temp1Text.setText(prefs.getString("temp1", ""));
         temp2Text.setText(prefs.getString("temp2", ""));
         weatherDespText.setText(prefs.getString("weather_desp", ""));
-        publishText.setText("Today " + prefs.getString("publish_time", "") + " Published");
+        publishText.setText(prefs.getString("publish_time", ""));
         currentDateText.setText(prefs.getString("current_date", ""));
-        weatherInfoLayout.setVisibility(View.VISIBLE);
-        cityNameText.setVisibility(View.VISIBLE);
+
+        //Log.d("WeatherActivity", prefs.getString("city_name", ""));
+        //Log.d("WeatherActivity", prefs.getString("temp1", ""));
+        //Log.d("WeatherActivity", prefs.getString("temp2", ""));
+        //Log.d("WeatherActivity", prefs.getString("weather_desp", ""));
+
+        //weatherInfoLayout.setVisibility(View.VISIBLE);
+        //cityNameText.setVisibility(View.VISIBLE);
     }
 }
