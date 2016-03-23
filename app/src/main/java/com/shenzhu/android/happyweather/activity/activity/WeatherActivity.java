@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shenzhu.android.happyweather.R;
+import com.shenzhu.android.happyweather.activity.service.AutoUpdateService;
 import com.shenzhu.android.happyweather.activity.util.HttpCallbackListener;
 import com.shenzhu.android.happyweather.activity.util.HttpUtil;
 import com.shenzhu.android.happyweather.activity.util.Utility;
@@ -90,6 +92,9 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
                 publishText.setText("Sychronizing...");
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                 String weatherCode = prefs.getString("weather_code", "");
+
+                Log.d("WeatherActivity", weatherCode);
+
                 if(!TextUtils.isEmpty(weatherCode)){
                     queryWeatherInfo(weatherCode);
                 }
@@ -169,5 +174,8 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
 
         //weatherInfoLayout.setVisibility(View.VISIBLE);
         //cityNameText.setVisibility(View.VISIBLE);
+
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 }
